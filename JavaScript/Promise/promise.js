@@ -23,30 +23,30 @@
 // -------------------------------------------------
 
 // Promise的三种状态
-let p1 = new Promise((resolve, reject) => {
-  resolve(1)
-}).then(() => {
-  console.log('p1.then'); // then的立即执行
-});
-let p2 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve(2)
-  }, 500)
-});
-let p3 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    reject(3)
-  }, 500)
-})
+// let p1 = new Promise((resolve, reject) => {
+//   resolve(1)
+// }).then(() => {
+//   console.log('p1.then'); // then的立即执行
+// });
+// let p2 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve(2)
+//   }, 500)
+// });
+// let p3 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     reject(3)
+//   }, 500)
+// })
 
-console.log('cl', p1);
-console.log('cl', p2);
-console.log('cl', p3);
+// console.log('cl', p1);
+// console.log('cl', p2);
+// console.log('cl', p3);
 
-setTimeout(() => { console.log('set', p2); }, 1000)
-setTimeout(() => { console.log('set', p3); }, 1000)
+// setTimeout(() => { console.log('set', p2); }, 1000)
+// setTimeout(() => { console.log('set', p3); }, 1000)
 
-p1.then(value => console.log('then', value))
-p2.then(value => console.log('then', value))
-p3.catch(err => console.log('then', err))
+// p1.then(value => console.log('then', value))
+// p2.then(value => console.log('then', value))
+// p3.catch(err => console.log('then', err))
 // p3.then(value => console.log('then', value))
