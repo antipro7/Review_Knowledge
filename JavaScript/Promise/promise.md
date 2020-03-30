@@ -48,6 +48,15 @@ new Promise (请求1)
 
 `类方法：`
 1. Promise.resolve
+Promise 对象必须 `reslove` 一个值才可以被之后的`then`接收。而`then`中的函数要`return`一个结果或者一个新的 Promise 对象(then本身就会返回一个新promise，如果没有return数据，下一个then接收的值就是`undefined`)，才可以让之后的`then`回调接收
+> 
+```
+let p = new Promise((reslove) => {
+  reslove(2)
+  // return 2 无法传递给下面的then
+})
+p.then(v => v).then(v => console.log(v)) // 2
+```
 2. Promise.reject
 3. Promise.race
 > 多个 Promise 任务同时执行，返回最先执行结束的 Promise 任务的结果，不管这个 Promise 结果是成功还是失败
@@ -60,6 +69,12 @@ new Promise (请求1)
 1. Promise.prototype.then
 > 作用是为 Promise 实例添加状态改变时的回调函数。`then`方法的第一个参数是`reslove`状态的回调函数，第二个参数（可选）是`rejected`状态的回调函数
 > `then`方法返回的是一个新的 Promise 实例，因此可以采用链式写法
+
+> `then` 这两个参数的返回值可以是一下三种情况中的一种
+> 
+> - `return` 一个同步的值，或者`undefined`(当没有返回一个有效值时，默认返回undefined)，`then`方法将返回一个resolved状态的Promise对象，Promise对象的值就是这个返回值
+> - `return`另一个 Promise，`then`方法将根据这个Promise的状态和值创建一个新的Promise对象返回
+> - `throw`一个同步异常，`then`方法将返回一个`rejected`状态的Promise，值是该异常
 2. Promise.prototype.catch
 > 是`.then(null, rejection)`或`.then(undefined, rejection)`的别名，用于指定发生错误时的回调函数
 
@@ -88,7 +103,7 @@ async function click () {
 https://juejin.im/post/5aa3f7b9f265da23766ae5ae
 
 ### Promise 特点
-源代码在此[请点击]()
+源代码在此[请点击](https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/promise.js)
 
 **1. Promise 的立即执行性**
 ```
@@ -111,14 +126,11 @@ success
 ```
 将 p.then 注释掉依然会执行console.log('create a promise')
 这就说明仅仅是在刚创建(new) Promise 时，作为 Promise 参数被传入的函数都会被立即执行(没有调用变量p)，只是其中执行的代码可以是异步代码
-ps: 因为promise内部的立即执行行，这个也会导致 `then` 立即执行(见下例)
 
 **2. Promise 三种状态**
 ```
 let p1 = new Promise((resolve, reject) => {
   resolve(1)
-}).then(() => {
-  console.log('p1.then'); // then的立即执行
 });
 let p2 = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -141,22 +153,86 @@ setTimeout(() => { console.log('set', p3); }, 1000)
 p1.then(value => console.log('then', value))
 p2.then(value => console.log('then', value))
 p3.catch(err => console.log('then', err))
-p3.then(value => console.log('then', value))
+p3.then(value => console.log('then', value)) // 不会输出任何东西
 
 // 输出
+cl Promise { 1 }
 cl Promise { <pending> }
 cl Promise { <pending> }
-cl Promise { <pending> }
-p1.then
-then undefined
+then 1
 then 2
 then 3
 set Promise { 2 }
 set Promise { <rejected> 3 }
 ```
+Promise 的内部实现是一个状态机，有三种状态`pending` `resolved` `rejected`.
+当Promise刚创建完成时，处于`pending`状态
+当Promise中的函数参数执行了`resolve`后，Promise由`pending`状态变成`resolved`状态
+如果在Promise的函数参数中执行的是`reject`方法，那么Promise会由`pending`状态变成`rejected`状态。
 
+**3. Promise 状态的不可逆性**
+```
+let p1 = new Promise((resolve, reject) => {
+  resolve('p1 - success1');
+  resolve('p1 - success2');
+})
 
+let p2 = new Promise((resolve, reject) => {
+  resolve('p2 - success');
+  reject('p2 - reject')
+})
 
+p1.then(value => console.log(value))
+p2.then(value => console.log(value))
+
+// 输出
+p1 - success1
+p2 - success
+```
+**4. 链式调用**
+```
+let p = new Promise((resolve, reject) => {
+  resolve(1);
+})
+
+p.then(v => {
+  console.log('1', v);
+  return v * 2;
+}).then(v => {
+  console.log('2', v);
+}).then(v => {
+  console.log('3', v);
+  return Promise.resolve('resolve');
+}).then(v => {
+  console.log('4', v);
+  return Promise.reject('reject');
+}).then(v => {
+  console.log('resolve:', v);
+}, err => {
+  console.log('reject:', err);
+})
+
+// 输出
+1 1
+2 2
+3 undefined
+4 resolve
+reject: reject
+```
+**5. Promise then() 回调异步性**
+```
+let p = new Promise((resolve, reject) => {
+  resolve('success');
+})
+
+p.then(v => {
+  console.log(v);
+})
+
+console.log('I will console log in where');
+```
+Promise接收的函数参数是同步执行的，但then方法中的回调函数执行则是异步的，因此，"success"会在后面输出。
+**6. Promise 的立即执行性**
 
 
 

@@ -25,9 +25,7 @@
 // Promise的三种状态
 // let p1 = new Promise((resolve, reject) => {
 //   resolve(1)
-// }).then(() => {
-//   console.log('p1.then'); // then的立即执行
-// });
+// })
 // let p2 = new Promise((resolve, reject) => {
 //   setTimeout(() => {
 //     resolve(2)
@@ -49,4 +47,50 @@
 // p1.then(value => console.log('then', value))
 // p2.then(value => console.log('then', value))
 // p3.catch(err => console.log('then', err))
-// p3.then(value => console.log('then', value))
+
+// promise 状态的不可逆性
+// let p1 = new Promise((resolve, reject) => {
+//   resolve('p1 - success1');
+//   resolve('p1 - success2');
+// })
+
+// let p2 = new Promise((resolve, reject) => {
+//   resolve('p2 - success');
+//   reject('p2 - reject')
+// })
+
+// p1.then(value => console.log(value))
+// p2.then(value => console.log(value))
+
+// 链式调用
+// let p = new Promise((resolve, reject) => {
+//   resolve(1);
+// })
+
+// p.then(v => {
+//   console.log('1', v);
+//   return v * 2;
+// }).then(v => {
+//   console.log('2', v);
+// }).then(v => {
+//   console.log('3', v);
+//   return Promise.resolve('resolve');
+// }).then(v => {
+//   console.log('4', v);
+//   return Promise.reject('reject');
+// }).then(v => {
+//   console.log('resolve:', v);
+// }, err => {
+//   console.log('reject:', err);
+// })
+
+// Promise then() 回调异步性
+let p = new Promise((resolve, reject) => {
+  resolve('success');
+})
+
+p.then(v => {
+  console.log(v);
+})
+
+console.log('I will console log in where');
