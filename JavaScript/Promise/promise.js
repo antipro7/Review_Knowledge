@@ -25,6 +25,8 @@
 // Promise的三种状态
 let p1 = new Promise((resolve, reject) => {
   resolve(1)
+}).then(() => {
+  console.log('p1.then'); // then的立即执行
 });
 let p2 = new Promise((resolve, reject) => {
   setTimeout(() => {
