@@ -7,8 +7,9 @@
 4. [Promise][4]
 5. [深浅拷贝]
 6. [事件机制/EventLoop]
-7. [常用方法]
+7. [常用方法][7]
 
 
 
 [4]: https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/promise.md
+[7]: https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Utils/index.md
