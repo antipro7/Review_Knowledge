@@ -6,7 +6,7 @@
 ### Promise产生的原因，解决的痛点
 在实际项目中，如果遇到这样一个情况：我们需要根据第一个网络请求的结果，再去执行第二个网络请求，拿着第二个请求的结果再去执行第三个请求...
 不使用 Promise 的代码大概长下面这样子：
-```
+```js
 请求1 (function (请求结果1) {
   请求2 (function (请求结果2) {
     请求3 (function (请求结果3) {
@@ -21,7 +21,7 @@
 这就是大名鼎鼎的 ***回调地狱***
 
 作为一名21世纪的打字员，打代码一定要有所追求，一定要优雅。所以很多大佬就想办法解决这个问题，要用一个更加优雅的代码组织方式解决异步嵌套的问题。想到了类似下面这种同步的写法
-```
+```js
 let 请求结果1 = 请求1();
 let 请求结果2 = 请求2(请求结果1);
 let 请求结果3 = 请求3(请求结果2);
@@ -34,7 +34,7 @@ let 请求结果5 = 请求2(请求结果3);
 
 ### Promise 规范
 - promise 常规写法：
-```
+```js
 new Promise (请求1)
   .then(请求2(请求结果1))
   .then(请求3(请求结果2))
@@ -50,7 +50,7 @@ new Promise (请求1)
 1. Promise.resolve
 Promise 对象必须 `reslove` 一个值才可以被之后的`then`接收。而`then`中的函数要`return`一个结果或者一个新的 Promise 对象(then本身就会返回一个新promise，如果没有return数据，下一个then接收的值就是`undefined`)，才可以让之后的`then`回调接收
 > 
-```
+```js
 let p = new Promise((reslove) => {
   reslove(2)
   // return 2 无法传递给下面的then
@@ -83,7 +83,7 @@ p.then(v => v).then(v => console.log(v)) // 2
 ### 升级之 async / await
 
 假如有这么个需求：有三个独立的请求，请求成功后改变数据，我们需要再请求成功后拿到最新数据，然后再去执行另一个函数。
-```
+```js
 function 1 () { return ...new Promise }
 function 2 () { return ...new Promise }
 function 3 () { return ...new Promise }

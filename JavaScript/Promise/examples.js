@@ -1,29 +1,19 @@
-let p1 = new Promise((resolve, reject) => {
-  foo.bar();
-  resolve(1);
+let p1 = Promise.resolve(1)
+let p2 = Promise.resolve(p1)
+let p3 = new Promise((resolve, reject) => {
+  resolve(1)
+})
+let p4 = new Promise((resolve, reject) => {
+  resolve(p1)
 })
 
-p1.then(value => {
-  console.log('p1 then value', value);
-}, err =>{
-  console.log('p1 then err', err);
-}).then(value => {
-  console.log('p1 then then value', value);
-}, err => {
-  console.log('p1 then then err', value);
-})
+console.log(p1, p2, p3, p4);
+console.log(p1 === p2, p1 === p3, p1 === p4, p3 === p4)
 
-let p2 = new Promise((resolve, reject) => {
-  resolve(2);
-})
+p4.then(value => { console.log('p4 = ' + value); });
 
-p2.then(value => {
-  console.log('p2 then value', value);
-  foo.bar();
-}, err => {
-  console.log('p2 then err', err);
-}).then(value => {
-  console.log('p2 then then value', );
-}, err => {
+p3.then(value => { console.log('p3 = ' + value); });
 
-})
+p2.then(value => { console.log('p2 = ' + value); })
+
+p1.then(value => { console.log('p1 = ' + value); })
