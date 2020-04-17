@@ -226,3 +226,41 @@ Promise对象 | 直接返回这个Promise
 为什么 `p4` 的 `then` 最先调用，但在控制台上是最后输出结果的呢？因为`p4`的 `resolve` 中接收的参数是一个 `Promise` 对象 `p1` ，`resolve` 会对 `p1` ”拆箱“，获取 `p1` 的状态和值，但这个过程是异步的，可参考下一节
 
 **8. resolve 与 reject**
+```js
+let p1 = new Promise((resolve, reject) => {
+  resolve(Promise.resolve('p1 resolve'))
+})
+let p2 = new Promise((resolve, reject) => {
+  resolve(Promise.reject('p2 reject'))
+})
+let p3 = new Promise((resolve, reject) => {
+  reject(Promise.resolve('p3 resolve'))
+})
+
+p1.then(value => {
+  console.log('p1 fulfilled: ', value);
+}, err => {
+  console.log('p1 rejected: ', err);
+})
+
+p2.then(value => {
+  console.log('p2 fulfilled: ', value);
+}, err => {
+  console.log('p2 rejected: ', err);
+})
+
+p3.then(value => {
+  console.log('p3 fulfilled: ', value);
+}, err => {
+  console.log('p3 rejected: ', err);
+})
+
+// output
+// p3 rejected:  Promise { 'p3 resolve' }
+// p1 fulfilled:  p1 resolve
+// p2 rejected:  p2 reject
+```
+**resolve**
+`Promise`回调函数中的第一个参数 `resolve`，会对 `Promise` 执行 "拆箱" 动作。即当 `resolve` 的参数是一个 `Promise` 对象时，`resolve` 会 "拆箱" 获取这个 `Promise` 对象的状态和值，但这个过程是异步的。p1"拆箱"后，获取到 `Promise` 对象的状态是 `resolved`，因此 `fulfilled` 回调被执行；p2"拆箱"后，获取到 `Promise` 对象的状态是 `rejected` ，因此 `rejected` 回调被执行。
+**reject**
+但 `Promise` 回调函数中的第二个参数 `reject` 不具备 "拆箱" 的能力，`reject` 的参数会直接传递给 `then` 方法中的 `rejected` 回调。因此，即使p3 `reject` 接收了一个 `resolved` 状态的 `Promise`，`then` 方法中被调用的依然是`rejected`，并且参数就是 `reject` 接收到的 `Promise` 对象。
