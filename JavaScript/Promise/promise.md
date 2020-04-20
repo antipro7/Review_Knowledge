@@ -1,5 +1,3 @@
-> 学习一个新知识，我们要一定要了解这个新东西三个要素
-> 是什么？怎么用？为什么？
 ## Promise是什么
 > **Promise 是异步编程的一种解决方案，比传统的回调函数和事件相比更加的合理，强大**
 
@@ -67,12 +65,15 @@ p.then(v => v).then(v => console.log(v)) // 2
 
 `实例方法：`
 1. Promise.prototype.then
-> 作用是为 Promise 实例添加状态改变时的回调函数。`then`方法的第一个参数是`reslove`状态的回调函数，第二个参数（可选）是`rejected`状态的回调函数
+> 作用是为 Promise 实例添加状态改变时的回调函数。
+第一个参数是`reslove`状态的回调函数
+第二个参数（可选）是`rejected`状态的回调函数
+
 > `then`方法返回的是一个新的 Promise 实例，因此可以采用链式写法
 
 > `then` 这两个参数的返回值可以是一下三种情况中的一种
 > 
-> - `return` 一个同步的值，或者`undefined`(当没有返回一个有效值时，默认返回undefined)，`then`方法将返回一个resolved状态的Promise对象，Promise对象的值就是这个返回值
+> - `return` 一个同步的值，或者`undefined`(当没有返回一个有效值时，默认返回 `undefined`)，`then`方法将返回一个resolved状态的Promise对象，Promise对象的值就是这个返回值
 > - `return`另一个 Promise，`then`方法将根据这个Promise的状态和值创建一个新的Promise对象返回
 > - `throw`一个同步异常，`then`方法将返回一个`rejected`状态的Promise，值是该异常
 2. Promise.prototype.catch
@@ -98,14 +99,13 @@ async function click () {
 }
 ```
 
-### Promise 的实现
-https://juejin.im/post/5aa3f7b9f265da23766ae5ae
 
-### 通过题目掌握 Promise
+### 8题掌握 Promise
 [<i class="fas fa-dumbbell fa-2x"></i>](https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/examples.md)
 
 
-
+### Promise 的实现
+[从一道Promise执行顺序的题目看Promise实现](https://juejin.im/post/5aa3f7b9f265da23766ae5ae)
 
 
 
