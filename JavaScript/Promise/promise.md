@@ -106,20 +106,7 @@ async function click () {
 
 ### Promise 的实现
 [从一道Promise执行顺序的题目看Promise实现](https://juejin.im/post/5aa3f7b9f265da23766ae5ae)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[简易版 Promise 实现（代码）]()
 
 
 
@@ -128,7 +115,7 @@ async function click () {
 
 ### 自测小集
 [八段代码彻底掌握 Promise](https://juejin.im/post/597724c26fb9a06bb75260e8#heading-0)
-[深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
+[冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
 
 ### 参考文章
 - [es6-promise阮一峰](https://es6.ruanyifeng.com/#docs/promise)
