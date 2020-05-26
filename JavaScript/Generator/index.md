@@ -97,3 +97,61 @@ b.next(13); // {value: 42, done: true}
 - Promise 对象
 
 Generator 函数将 JavaScript 异步编程带入了一个全新的阶段
+
+**2. 协程的 Generator 函数实现**
+> 传统异步编程解决方案有一种叫 `协程`，多个线程互相协作，完成异步任务
+
+Generator 函数是协程在 ES6 的实现，最大特点就是可以暂停函数的执行
+
+Generator 函数就是一个封装的 `异步任务`，异步操作需要暂停的地方，都用 `yield` 语句表明。
+```js
+function* gen(x) {
+  let y = yield x + 2
+  return y
+}
+
+let g = gen(1)
+g.next() // {value: 3, done: false}
+g.next(8) // {value: 8, done: true}
+```
+调用 Generator 函数，会返回一个内部指针（遍历器）`g`。这是 Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。
+调用指针 `g` 的 `next` 方法，就会移动内部指针，指向 `yield` 语句，执行异步任务的下一段。`next` 方法的作用就是分阶段执行 Generator 函数。
+
+**3. 异步任务的封装**
+封装一个异步操作
+```js
+let fetch = require('node-fetch')
+
+function* gen() {
+  let url = '...'
+  let result = yield fetch(url)
+  console.log(result.bio)
+}
+```
+该操作先读取一个远程接口，然后从 JSON 格式的数据解析信息。这段代码非常像同步操作，除了加上了 yield 命令
+
+执行这段代码的方法如下
+```js
+let g = gen()
+let result = g.next()
+
+result.value.then(data => {
+  return data.json()
+}).then(data => {
+  g.next(data)
+})
+```
+上面代码中
+1.首先执行 Generator 函数，获取遍历器对象。
+2.然后使用 next 方法（第二行），执行异步任务的第一阶段。
+3.由于 Fetch 模块返回的是一个 Promise 对象，因此要用 then 方法调用下一个 next 方法。
+
+**缺点**
+可以看到，虽然 Generator 函数将异步操作表示得很简洁，但是流程管理却不方便（即何时执行第一阶段、何时执行第二阶段）
+
+> 另外
+> Thunk 模块 和 co模块用来控制 Generator 函数的自动流程管理
+> 再查找资料了解，本文不详细介绍了（有点难...没用过）
+
+这种写法还是有些许不便，所以在 ES2017 标准又引入了 async 函数
+async 函数介绍点这里 [async]()

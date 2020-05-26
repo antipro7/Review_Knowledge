@@ -1,14 +1,14 @@
-function* gen(x) {
-  var a = yield x + 1;
-  console.log('a', a)
-
-  var b = yield a + 2;
-  console.log('b', b);
-
-  var c = yield x + 3;
-  console.log('c', c);
-
-  return 4
+function timeout(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
 }
 
-var g = gen(11)
+async function asyncPrint(value, ms) {
+  console.log('in');
+  await timeout(ms)
+  console.log('out');
+  console.log('value', value);
+}
+
+asyncPrint('hello', 2000)
