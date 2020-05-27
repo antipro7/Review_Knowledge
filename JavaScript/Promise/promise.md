@@ -34,6 +34,21 @@ let 请求结果5 = 请求2(请求结果3);
 于是 Promise 规范就诞生了。
 
 ### Promise 规范
+- Promise 构造函数：
+Promise 对象是一个构造函数，用来生成 Promise 实例
+```js
+// 创建一个 promise 实例
+const promise = new Promise(resolve, reject) {
+  // ... some code 
+  if (/* 异步操作成功 */) {
+    resolve(value)
+  } else {
+    reject(error)
+  }
+}
+```
+Promise 构造函数接受一个函数作为参数，该函数的两个参数分别是 resolve 和 reject. 它们又是两个函数
+
 - promise 常规写法：
 ```js
 new Promise (请求1)
@@ -49,7 +64,7 @@ new Promise (请求1)
 
 `类方法：`
 1. Promise.resolve
-Promise 对象必须 `reslove` 一个值才可以被之后的`then`接收。而`then`中的函数要`return`一个结果或者一个新的 Promise 对象(then本身就会返回一个新promise，如果没有return数据，下一个then接收的值就是`undefined`)，才可以让之后的`then`回调接收
+Promise 对象必须 `reslove` 一个值才可以被之后的`then`接收。而`then`中的函数要`return`一个结果或者一个新的 Promise 对象 ( then 本身就会返回一个新 promise，如果没有 return 数据，下一个 then 接收的值就是`undefined` )，才可以让之后的`then`回调接收
 > 
 ```js
 let p = new Promise((reslove) => {

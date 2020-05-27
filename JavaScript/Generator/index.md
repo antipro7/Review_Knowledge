@@ -114,7 +114,7 @@ let g = gen(1)
 g.next() // {value: 3, done: false}
 g.next(8) // {value: 8, done: true}
 ```
-调用 Generator 函数，会返回一个内部指针（遍历器）`g`。这是 Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。
+调用 Generator 函数，返回一个内部指针（遍历器）`g`。这是 Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。
 调用指针 `g` 的 `next` 方法，就会移动内部指针，指向 `yield` 语句，执行异步任务的下一段。`next` 方法的作用就是分阶段执行 Generator 函数。
 
 **3. 异步任务的封装**

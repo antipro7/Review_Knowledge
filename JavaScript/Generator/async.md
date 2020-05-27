@@ -38,3 +38,89 @@ async 函数的返回值是 Promise 对象，这比 Generator 函数的返回值
 进一步说，async 函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而 await 命令就是内部 then 命令的语法糖。
 
 #### 语法
+async 函数返回一个 Promise 对象。
+
+**1. async 函数返回什么**
+async 函数返回的一定是一个 Promise 对象
+```js
+async function r() {
+  let a = await 'hello world'
+  return a
+}
+r() // Promise {<resolved>: 'hello world'}
+
+async function n_r() {
+  let a = await 'hello world'
+}
+n_r() // Promise {<resolved>: undefined}
+```
+值有三种：1.内部有 return, 有返回值。2.无 return， 返回 undefined。3.返回报错
+
+**2. （重点）await 命令**
+await 后面可接收三种表达式
+- Promise 对象，返回该对象的结果
+- 不是 Promise 对象，直接返回对应的值
+- thenable 对象（即定义then方法的对象），将其等同于 Promise 对象
+
+```js
+class Sleep {
+  constructor(timeout) {
+    this.timeout = timeout
+  }
+  then(resolve, reject) {
+    const startTime = Date.now()
+    setTimeout(() => {
+      return resolve(Date.now() - startTime)
+    }, this.timeout)
+  }
+}
+(async () => {
+  const sleepTime = await new Sleep(1000)
+  console.log(sleepTime)
+})()
+// 1000
+----
+上面代码中，await 命令后面的 Sleep 实例不是 Promise 对象，
+但是其中定义了 then 方法，await 命令将其视为 Promise 处理了
+```
+
+> JavaScript 一直没有休眠的语法，现在借助 await 命令就可以实现让程序停顿指定时间（在这停顿ba~）
+```js
+function sleep(interval) {
+  return new Promise(resolve => {
+    setTimeout(resolve, interval)
+  })
+}
+
+(async function async() {
+  for (let i = 0; i <= 5; i++) {
+    console.log(i)
+    await sleep(1000)
+  }
+})()
+// 一秒输出一个数，从 0 到 5
+// 这就是一道经典的面试题了（一次从零输出至五，考察闭包）
+```
+
+**3. 使用注意点**
+1. 多个 await 命令后的异步操作，如果不存在继发关系，最好让它们同时触发
+```js
+ let foo = await getFoo()
+ let bar = await getBar()
+ // getFoo 和 gerBar 是两个独立异步操作，被写成了继发关系。
+ // 这样 getBar 必须在 getFoo 后才执行，耗时，不好
+
+// 同时执行
+// 1
+let [foo, bar] = await Promise.all([getFoo(), getBar()])
+
+// 2
+let fooPromise = getFoo()
+let barPromise = getBar()
+let foo = await fooPromise
+let bar = await barPromise
+```
+
+2. await 命令只能用在 async 函数中，普通函数中会报错
+
+**4. async 的实现原理**
