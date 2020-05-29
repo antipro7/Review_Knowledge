@@ -121,6 +121,127 @@ let foo = await fooPromise
 let bar = await barPromise
 ```
 
-2. await 命令只能用在 async 函数中，普通函数中会报错
+2. await 命令只能用在 async 函数中，普通函数中会报错。（特殊情况 `顶层 await`）
+
+3. 处理异常
+如果 async 后面的异步操作出错，相当于 async 函数返回的 Promise 对象状态变为 reject
+处理 async 异常，建议是 **使用 try...catch 代码块**
+```js
+// 不论多少个 await,统一放在 try...catch 中
+async function main() {
+  try {
+    const val1 = await firstStep()
+    const val2 = await secondStep(val1)
+    const val3 = await thirdStep(val1, val2)
+  } catch(err) {
+    console.error(err)
+  }
+}
+```
 
 **4. async 的实现原理**
+async 函数的实现原理，就是将 Generator 函数和自动执行器，包装在一个函数内
+```js
+async function fn(args) { ... }
+
+// 等同于
+function fn(args) {
+  return spawn(function* () {
+    // ...
+  })
+}
+```
+> 所有的 async 函数都可以写成上面的第二种形式，其中 `spawn` 函数就是 `自动执行器`
+```js
+// 实现 spawn
+function spwan(genF) {
+  return new Promise((resolve, reject) => {
+    const gen = genF()
+
+    function step(nextF) {
+      // 执行 next 命令
+      let next
+      try {
+        next = nextF()
+      } catch(e) {
+        return reject(e)
+      }
+
+      if (next.done) {
+        return resolve(next.value)
+      }
+
+      // 返回数值为 next.value Promise 对象
+      Promise.resolve(next.value).then(v => {
+        step(() => gen.next(v))
+      }, e => {
+        step(() => gen.throw(e))
+      })
+    }
+
+    step(() => gen.next(undefined))
+  })
+}
+```
+
+**5. 与 其他异步处理方法 对比**
+下面我们以获取 github 用户信息为例，进行对比
+```js
+// 获取用户信息函数
+function getGithubUserInfo() {
+  return new Promsie((resolve, reject) => {
+    fetch('https://api.github.com/users/antipro7')
+      .then(data => resolve(data.json()))
+      .catch(err => reject(err))
+  })
+}
+```
+> promise 方法
+```js
+function byPromise() {
+  getGithubUserInfo()
+    .then(data => {
+      console.log(data)
+    })
+    .then()
+    ...
+    .catch(err => console.log(err))
+}
+byPromise()
+```
+Promise 的方式解决了 **回调地狱** 问题，但是如果处理流程再复杂的话，将会使用太多的 `then` 方法，每个流程步骤都包含在 `then` 中，语义化不明显。如果需要用到另一个异步的结果，就会在 `then` 中嵌套了
+
+---
+> Generator 方法
+```js
+function* byGenerator() {
+  const userInfo = yield getGithubUserInfo()
+  return userInfo
+}
+
+const g = byGenerator()
+const result = g.next().value
+
+result.then(v => {
+  console.log(v)
+}).catch(err => {
+  console.log(err)
+})
+```
+Generator 解决了 Promise 的一些问题，流程更加直观语义化。但是 Generator 的问题是其执行函数，获取数据时必须使用执行器，会写大量的 `next` 命令
+
+---
+> async 方法
+```js
+async function byAsync() {
+  try {
+    let userInfo = await getGithubUserInfo()
+    return userInfo
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+byAsync().then(v => console.log(v))
+```
+`async` 函数完美的解决了上面两种方式的问题。流程清晰，直观、语义明显。操作异步流程就如同操作同步流程。
