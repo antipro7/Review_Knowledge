@@ -87,9 +87,9 @@ p.then(v => v).then(v => console.log(v)) // 2
 第一个参数是`reslove`状态的回调函数
 第二个参数（可选）是`rejected`状态的回调函数
 
-> `then`方法返回的是一个新的 Promise 实例，因此可以采用链式写法
+`then`方法返回的是一个新的 Promise 实例，因此可以采用链式写法
 
-> `then` 这两个参数的返回值可以是一下三种情况中的一种
+`then` 这两个参数的返回值可以是一下三种情况中的一种
 > 
 > - `return` 一个同步的值，或者`undefined`(当没有返回一个有效值时，默认返回 `undefined`)，`then`方法将返回一个resolved状态的Promise对象，Promise对象的值就是这个返回值
 > - `return`另一个 Promise，`then`方法将根据这个Promise的状态和值创建一个新的Promise对象返回
@@ -123,8 +123,8 @@ async function click () {
 
 
 ### Promise 的实现
-[从一道Promise执行顺序的题目看Promise实现](https://juejin.im/post/5aa3f7b9f265da23766ae5ae)
-[简易版 Promise 实现（代码）]()
+- [从一道Promise执行顺序的题目看Promise实现](https://juejin.im/post/5aa3f7b9f265da23766ae5ae)
+- [简易版 Promise 实现（代码）]()
 
 
 
@@ -132,8 +132,8 @@ async function click () {
 
 
 ### 自测小集
-[八段代码彻底掌握 Promise](https://juejin.im/post/597724c26fb9a06bb75260e8#heading-0)
-[冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
+- [八段代码彻底掌握 Promise](https://juejin.im/post/597724c26fb9a06bb75260e8#heading-0)
+- [冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
 
 ### 参考文章
 - [es6-promise阮一峰](https://es6.ruanyifeng.com/#docs/promise)
