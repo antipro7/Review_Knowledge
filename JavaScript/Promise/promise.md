@@ -119,7 +119,7 @@ async function click () {
 
 
 ### 8题掌握 Promise
-[<i class="fas fa-dumbbell fa-2x"></i>](https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/examples.md)
+[Click Here](https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/examples.md)
 
 
 ### Promise 的实现
@@ -143,10 +143,3 @@ async function click () {
 - [ES6系列之我们来聊聊 Promise](https://github.com/mqyqingfeng/Blog/issues/98)
 
 
-
-
-<head> 
-  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script> 
-  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/v4-shims.js"></script> 
-</head> 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
