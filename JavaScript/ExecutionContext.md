@@ -14,7 +14,7 @@ var scope = 'global scope'
 function checkscope() {
   var scope = 'local scope'
   function f() {
-     return scope
+    return scope
   }
 
   return f()
@@ -42,8 +42,8 @@ JavaScript 函数的执行用到了作用域链，这个作用域链是在函数
 
 虽然两端代码执行结果是一样的，但是究竟为什么会这样呢，就要看下一节 [JS 执行上下文](#EC)
 
-**`Bounty:`**
-1. 两段代码理解 函数作用域是在定义时决定的
+**`小题:`**
+1. 通过两段代码理解 函数作用域是在定义时决定的
 ```js
 // eg1
 var value = 1;
@@ -85,26 +85,31 @@ var o = {
 o.b.fn()
 ```
 输出是 10，因为 fn 中打印 a 并不能读取到对象 o 的 a 属性。
-fn 的作用域链是 [AO, Global.VO]
+fn 的作用域链是 `[AO, Global.VO]`
 
 <span id='EC'><span>
 ## JS 执行上下文
 
-#### 什么是执行上下文
+### 什么是执行上下文
 执行上下文就是指代码执行的环境，JS 中运行任何的代码都是在执行上下文中运行。
 
-#### 执行上下文重要属性
+### 执行上下文重要属性
 对于每个执行上下文，都有三个重要属性
  - [变量对象（Variable Object, VO）]()<br>首先初始化函数的参数arguments，提升函数声明和变量声明
  - [作用域链（Scope chain）]()<br>作用域链就是从当前作用域开始一层一层向上寻找某个变量，直到找到全局作用域还是没找到，就宣布放弃。这种一层一层的关系，就是作用域链。
  - [this]() <br>确定 this 指向
 
-#### 执行上下文类型
+### 执行上下文类型
  - 全局上下文
  - 函数上下文
  - eval 函数上下文和 with 函数上下文（不推荐）
+<br>
 
-### 参考文章
+**全局执行上下文** 是最外层的执行环境。在浏览器中，为 `window` 对象，即全局对象。所有全局变量和函数都是作为 `window` 对象的属性和方法创建的。一个程序中只会有一个全局执行上下文。
+
+**函数上下文** 
+
+## 参考文章
 - [JavaScript深入之词法作用域和动态作用域](https://github.com/mqyqingfeng/Blog/issues/3)
 - [JavaScript深入之执行上下文栈](https://github.com/mqyqingfeng/Blog/issues/4)
 - [JavaScript深入之变量对象](https://github.com/mqyqingfeng/Blog/issues/5)
