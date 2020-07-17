@@ -19,9 +19,8 @@
 这就是大名鼎鼎的 ***回调地狱***
 > JS 实现异步是通过回调函数实现的。就是把任务的第二段单独写在一个函数里，等到第一段有了结果需要执行第二段时，直接调用这个回调函数。
 > Promise 就是为了解决 `回调地狱` 问题提出的，它不是新的语法功能，而是一种新的写法，允许将回调函数的嵌套改变成链式调用。
-Promise 最大的问题时代码冗余，一大堆then,原来的语义不清晰
 
-作为一名21世纪的打字员，打代码一定要有所追求，一定要优雅。所以很多大佬就想办法解决这个问题，要用一个更加优雅的代码组织方式解决异步嵌套的问题。想到了类似下面这种同步的写法
+作为一名21世纪的打字员，打代码一定要有所追求，一定要优雅。所以很多大佬就想办法解决这个问题，要用一个更加优雅的代码组织方式解决异步嵌套的问题。想到了类似下面这种同步的写法，于是 Promise 规范就诞生了。
 ```js
 let 请求结果1 = 请求1();
 let 请求结果2 = 请求2(请求结果1);
@@ -31,7 +30,8 @@ let 请求结果3 = 请求3(请求结果2);
 let 请求结果4 = 请求3(请求结果1);
 let 请求结果5 = 请求2(请求结果3);
 ```
-于是 Promise 规范就诞生了。
+当然 Promise 也有它的不足，Promise 最大的问题是会代码冗余，一大堆then，原来的语义不清晰
+那下面我们来看看什么是 Promise 规范
 
 ### Promise 规范
 - Promise 构造函数：
@@ -118,7 +118,7 @@ async function click () {
 ```
 
 
-### 8题掌握 Promise
+### 8题掌握 Promise 的特性
 [Click Here](https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/examples.md)
 
 
@@ -127,13 +127,45 @@ async function click () {
 - [简易版 Promise 实现（代码）]()
 
 
-
-
-
-
 ### 自测小集
-- [八段代码彻底掌握 Promise](https://juejin.im/post/597724c26fb9a06bb75260e8#heading-0)
-- [冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
+1. Promise 链式调用的执行顺序
+我们通过一道妈妈做饭的题目来看 Promise 的链式调用
+按照书写习惯，从上到下 log 妈妈做饭的过程
+```js
+new Promise((resolve, reject) => {
+  console.log('妈妈要做饭');
+  resolve();
+}).then(() => {
+  console.log('买菜');
+
+  new Promise((resolve, reject) => {
+    console.log('去菜市场');
+    resolve();
+  }).then(() => {
+    console.log('买食物');
+  }).then(() => {
+    console.log('回家');
+  })
+}).then(() => {
+  console.log('做菜');
+})
+```
+先思考下这题输出什么？
+```js
+妈妈要做饭
+买菜
+去菜市场
+买食物
+做菜
+回家
+```
+what！！！难道妈妈不爱我了，在外面做了饭也不给我吃了是吗？
+![](./../assets/imgs/qlg.jpg)
+第一次看到这个题目就错了，然后快速看了一遍答案，感觉自己会了，感觉自己又学到了新知识，又变强了！！
+![](./../assets/imgs/bqbt.gif)
+后来又看到了这题，我的头发回来啦哈哈哈哈，又错了。
+
+2. [冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
 
 ### 参考文章
 - [es6-promise阮一峰](https://es6.ruanyifeng.com/#docs/promise)
@@ -141,5 +173,6 @@ async function click () {
 - [八段代码彻底掌握 Promise](https://juejin.im/post/597724c26fb9a06bb75260e8#heading-0)
 - [从一道Promise执行顺序的题目看Promise实现](https://juejin.im/post/5aa3f7b9f265da23766ae5ae)
 - [ES6系列之我们来聊聊 Promise](https://github.com/mqyqingfeng/Blog/issues/98)
+- [Promise 链式调用顺序引发的思考](https://juejin.im/post/5dabf847e51d4524d674881c)
 
 
