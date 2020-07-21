@@ -22,6 +22,9 @@ success
 将 p.then 注释掉依然会执行console.log('create a promise')
 这就说明仅仅是在刚创建(new) Promise 时，作为 Promise 参数被传入的函数都会被立即执行(没有调用变量p)，只是其中执行的代码可以是异步代码
 
+那为什么 new Promise 里面的代码是会直接执行的而不是和 then 一样放到微任务里？
+因为 new Promise 其实相当于 new Function ，这段代码是同步执行的，不会是异步执行。而 then 回调方法是异步的。
+
 **2. Promise 三种状态**
 ```js
 let p1 = new Promise((resolve, reject) => {

@@ -87,13 +87,20 @@ p.then(v => v).then(v => console.log(v)) // 2
 第一个参数是`reslove`状态的回调函数
 第二个参数（可选）是`rejected`状态的回调函数
 
-`then`方法返回的是一个新的 Promise 实例，因此可以采用链式写法
+`then` 方法返回的是一个新的 Promise 实例，因此可以采用链式写法
 
 `then` 这两个参数的返回值可以是一下三种情况中的一种
-> 
-> - `return` 一个同步的值，或者`undefined`(当没有返回一个有效值时，默认返回 `undefined`)，`then`方法将返回一个resolved状态的Promise对象，Promise对象的值就是这个返回值
+> - `return` 一个同步的值，或者`undefined`(没有返回一个有效值时，默认返回 `undefined`)；返回一个 resolved 状态的 Promise 对象，值为 `同步的值` 或 `undefined`
 > - `return`另一个 Promise，`then`方法将根据这个Promise的状态和值创建一个新的Promise对象返回
 > - `throw`一个同步异常，`then`方法将返回一个`rejected`状态的Promise，值是该异常
+```js
+.then(() => {
+  ...
+  return 2;
+  return Promise.resolve(2); // 与上面一样
+})
+```
+
 2. Promise.prototype.catch
 > 是`.then(null, rejection)`或`.then(undefined, rejection)`的别名，用于指定发生错误时的回调函数
 
@@ -151,6 +158,7 @@ new Promise((resolve, reject) => {
 })
 ```
 先思考下这题输出什么？
+来，上菜！
 ```js
 妈妈要做饭
 买菜
@@ -160,10 +168,16 @@ new Promise((resolve, reject) => {
 回家
 ```
 what！！！难道妈妈不爱我了，在外面做了饭也不给我吃了是吗？
+不可能呀！！！
 ![](./../assets/imgs/qlg.jpg)
 第一次看到这个题目就错了，然后快速看了一遍答案，感觉自己会了，感觉自己又学到了新知识，又变强了！！
 ![](./../assets/imgs/bqbt.gif)
 后来又看到了这题，我的头发回来啦哈哈哈哈，又错了。
+
+这里就牵扯到了更多 JS 不为人知的小秘密了，我恍然大悟，不了解这些秘密，那我永远都看不清这道题。
+聪明的你应该知道这些小秘密是什么吧，嘿嘿嘿~~ o(*￣▽￣*)o
+？不知道，没关系。另找间小黑屋，我们了解一下。
+[传送门 --- 》》》Promise then 链式调用的执行顺序]()
 
 2. [冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
 
