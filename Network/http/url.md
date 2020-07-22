@@ -168,3 +168,5 @@ TCP 三次握手连接成功后，开始发送 http 请求报文。
 - [经典面试题：从 URL 输入到页面展现到底发生什么？](https://zhuanlan.zhihu.com/p/57895541)
 - [从输入URL到页面加载的过程？如何由一道题完善自己的前端知识体系！](https://zhuanlan.zhihu.com/p/34453198)
 - [怎么理解TCP中的三次握手四次挥手](https://mp.weixin.qq.com/s?__biz=MzA4ODYyMDI3NA==&mid=2247484091&idx=1&sn=bd021869ec5db98281c08a1e6a7d8da2&chksm=90262f26a751a630c31e95c805f897bc2c01ded3924dc3cf5b820439d2c0daf133e05d617c48&scene=126&sessionid=1591754489&key=d140b998d465cbf4ddb5cd7bc5769924875a15b16f1bccbf86371f91c396f0b55154528b8ef103c406174bfe56f7afc3a31461f674a9b31f19348054d477bafa256c2719fbe12daaf2548524d0f68008&ascene=1&uin=MzYyNjI1Mzk1&devicetype=Windows+10+x64&version=62090070&lang=zh_CN&exportkey=AeNFC4E0tp%2FXaqR0T3B%2Fnh4%3D&pass_ticket=9iMUz3HFLUeZ9jp0m8lHzgldhxomWNP6brUlQo%2BInTXdyNtA%2Fb2nQAVn4N0j%2Ffnl)
+
+本文已发布于掘金个人专栏，便于更好的预览，请看原文 [请点击此处](https://juejin.im/post/5f179aa6f265da22b544844b)
