@@ -177,7 +177,7 @@ what！！！难道妈妈不爱我了，在外面做了饭也不给我吃了是�
 这里就牵扯到了更多 JS 不为人知的小秘密了，我恍然大悟，不了解这些秘密，那我永远都看不清这道题。
 聪明的你应该知道这些小秘密是什么吧，嘿嘿嘿~~ o(*￣▽￣*)o
 ？不知道，没关系。另找间小黑屋，我们了解一下。
-[传送门 --- 》》》Promise then 链式调用的执行顺序]()
+[传送门 --- 》》》Promise then 链式调用的执行顺序](https://github.com/antipro7/Review_Knowledge/blob/master/JavaScript/Promise/then_chain.md)
 
 2. [冴羽-深入了解promise](https://github.com/mqyqingfeng/Blog/issues/98)
 

@@ -6,7 +6,7 @@
 打开F12，让我们通过几题，一点一点褪去 `Promise then 链式调用的执行顺序` 的神秘外衣
 <center><font color=gray size=2>图文无关</font></center>
 
-![](./../assets/imgs/Lolita.webp)
+![](./../assets/imgs/Lolita.jpg)
 
 ## 参考文章
 - [深度揭秘 Promise 微任务注册和执行过程](https://juejin.im/post/5dc028dcf265da4d4b5fe94f)

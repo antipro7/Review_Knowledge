@@ -1,5 +1,3 @@
-
-
 **1. Promise 的立即执行性**
 ```js
 let p = new Promise((resolve, reject) => {
@@ -19,10 +17,11 @@ create a promise
 after new Promise
 success
 ```
-将 p.then 注释掉依然会执行console.log('create a promise')
+将 p.then 注释掉依然会执行console.log('create a promise')<br>
 这就说明仅仅是在刚创建(new) Promise 时，作为 Promise 参数被传入的函数都会被立即执行(没有调用变量p)，只是其中执行的代码可以是异步代码
 
-那为什么 new Promise 里面的代码是会直接执行的而不是和 then 一样放到微任务里？
+
+那为什么 new Promise 里面的代码是会直接执行的而不是和 then 一样放到微任务里？<br>
 因为 new Promise 其实相当于 new Function ，这段代码是同步执行的，不会是异步执行。而 then 回调方法是异步的。
 
 **2. Promise 三种状态**
@@ -63,9 +62,9 @@ then 3
 set Promise { 2 }
 set Promise { <rejected> 3 }
 ```
-Promise 的内部实现是一个状态机，有三种状态`pending` `resolved` `rejected`.
-当Promise刚创建完成时，处于`pending`状态
-当Promise中的函数参数执行了`resolve`后，Promise由`pending`状态变成`resolved`状态
+Promise 的内部实现是一个状态机，有三种状态`pending` `resolved` `rejected`<br>
+当Promise刚创建完成时，处于`pending`状态<br>
+当Promise中的函数参数执行了`resolve`后，Promise由`pending`状态变成`resolved`状态<br>
 如果在Promise的函数参数中执行的是`reject`方法，那么Promise会由`pending`状态变成`rejected`状态。
 
 **3. Promise 状态的不可逆性**
@@ -177,15 +176,13 @@ p1 then then value: undefined
 p2 then then err: ReferenceError: foo is not defined
 p2 then then then value: 1
 ```
-Promise中的异常由`then`参数中第二个回调函数`rejection`（Promise执行失败的回调）处理，异常信息将作为`Promise`的值。
-异常一旦得到处理，then返回的后续Promise对象将恢复正常，并会被`Promise`执行成功的回调函数处理。
-另外，需要注意p1、p2 多级`then`的回调函数是交替执行的，这正是由Promise then回调的异步性决定的
+Promise中的异常由`then`参数中第二个回调函数`rejection`（Promise执行失败的回调）处理，异常信息将作为`Promise`的值。<br>异常一旦得到处理，then返回的后续Promise对象将恢复正常，并会被`Promise`执行成功的回调函数处理。<br>另外，需要注意p1、p2 多级`then`的回调函数是交替执行的，这正是由Promise then回调的异步性决定的
 
 **需要注意的是**
 [阮大神ES6 Promise catch](https://es6.ruanyifeng.com/#docs/promise#Promise-prototype-catch) 中介绍
 > 一般来说，不要在then()方法里面定义 Reject 状态的回调函数（即then的第二个参数），总是使用catch方法。
 
-但是 `catch` 与上面这种写法是不一样的，输出顺序是不一样的。
+但是 `catch` 与上面这种写法是不一样的，输出顺序是不一样的。<br>
 `Promise.prototype.catch()` 方法是 `.then(null, rejection)` 或 `.then(undefined, rejection)` 的别名。比上面的第二个参数 `err回调` 多一个回调，执行顺序推迟。
 
 **7. Promise.resolve()**
@@ -225,7 +222,7 @@ p1.then(value => { console.log('p1 = ' + value); })
 普通值 | 一个resolve状态的Promise对象，对象的值就是这个参数
 Promise对象 | 直接返回这个Promise
 
-因此 `p1 === p2`，单通过 `new` 创建的 `Promise` 对象 每一个都是不同的对象。
+因此 `p1 === p2`，单通过 `new` 创建的 `Promise` 对象 每一个都是不同的对象。<br>
 为什么 `p4` 的 `then` 最先调用，但在控制台上是最后输出结果的呢？因为`p4`的 `resolve` 中接收的参数是一个 `Promise` 对象 `p1` ，`resolve` 会对 `p1` ”拆箱“，获取 `p1` 的状态和值，但这个过程是异步的，可参考下一节
 
 **8. resolve 与 reject**
