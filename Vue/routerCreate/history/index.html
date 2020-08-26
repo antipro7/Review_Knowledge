@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>H5 history 路由</title>
+  <style>
+    ul  {
+      display: inline-block;
+    }
+    li {
+      display: inline-block;
+      list-style: none;
+    }
+    li a{
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 触发路由 -->
+  <ul>
+    <li><a href="javascript:void(0)" data-path="/">main</a></li>
+    <li><a href="javascript:void(0)" data-path="/page1">page1</a></li>
+    <li><a href="javascript:void(0)" data-path="/page2">page2</a></li>
+  </ul>
+  <button id="back">后退</button>
+
+  <!-- 展示路由 -->
+  <div id="app"></div>
+
+  <script src="./index.js"></script>
+</body>
+</html>
